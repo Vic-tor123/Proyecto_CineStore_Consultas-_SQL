@@ -36,6 +36,24 @@ Las consultas SQL elaboradas en el proyecto demuestran los siguientes conocimien
 
 ● Visual Studio Code.
 
+## Estructura del proyecto
+
+```bash
+Proyecto_CineStore_Consultas-_SQL/
+│
+├──README.md
+│
+├──Datos_primarios/  #Carpeta con el archivo con la base de datos.
+│     └──BBDD_Proyecto.sql
+│
+├──Codigo_consultas/ #Carpeta con archivo con las consultas finales.
+│     └──Proyecto_Cinestore_SQL_code.sql
+│
+└──Img
+    ├──CineStore_logo.png
+    └──Diagrama_ER.png 
+```
+
 ## Desarrollo del proyecto
 
 ### Importación de datos y creación de BBDD
@@ -77,13 +95,26 @@ En la elaboracion del código se ha tenido en cuenta:
 -	Subconsultas con WHERE, creacion de vistas y tablas temporales.
 
 
-
-
 ## Esquema ER
 
 <div style="text-align: center;">
    <img src="Img/Diagrama_ER.png" aly="Diagrama_ER" />
 
+
+<div style="text-align: left;">
+
+
+## Contribuciones
+
+Si tienes alguna propuesta o corrección, no dudes en compartirla. Cualquier tipo de colaboración, ya sea en forma de código, documentación o comentarios, será apreciada y considerada. ¡Gracias por tu participación!
+
+
+
+## Autor
+
+<div style="text-align: left;">
+
+- Victor - [GitHub Profile](https://github.com/Vic-tor123)
 
 
 
