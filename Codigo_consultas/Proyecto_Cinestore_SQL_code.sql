@@ -1,7 +1,8 @@
 --1) Crea el esquema de la BBDD.
 --2) Muestra los nombres de todas las películas con una clasificación por edades de ‘Rʼ
-select title as "Titulo_pelicula", rating as "categoria_R" 
-from film f ;
+select title as "Titulo_pelicula", rating as "categoria_R"
+from film f 
+where rating = 'R';
 
 --3) Encuentra los nombres de los actores que tengan un “actor_idˮ entre 30 y 40.
 select concat(first_name,' ',last_name) as "Actor_Nombre_completo", actor_id 
@@ -51,7 +52,7 @@ from payment p
 inner join rental r on p.rental_id =r.rental_id
 order by r.rental_date desc
 limit 1
-offset 1;
+offset 2;
 
 --12)  Encuentra el título de las películas en la tabla “filmˮ que no sean ni ‘NC-17ʼ ni ‘Gʼ en cuanto a su clasificación.
 select title as "Titulo", rating as "Categoria_R" 
@@ -73,7 +74,7 @@ select sum(amount) as "Total_ingresos"
 from payment p ;
 
 --16) Muestra los 10 clientes con mayor valor de id.
-select customer_id as "10_cliestes_mayor_valorID"
+select customer_id as "10_clientes_mayor_valorID"
 from customer c
 order by customer_id desc
 limit 10;
@@ -165,7 +166,7 @@ order by film_id asc ;
 select concat(a.first_name,' ',a.last_name) as "Nombre_completo", count( fa.film_id) as "Numero_peliculas"
 from film_actor fa
 inner join actor a on fa.actor_id = a.actor_id
-group by concat(a.first_name,' ', a.last_name) ;
+group by a.actor_id;
 
 --31) Obtener todas las películas y mostrar los actores que han actuado en ellas, incluso si algunas películas no tienen actores asociados.
 select f.film_id, fa.actor_id 
@@ -266,11 +267,11 @@ where fa.film_id is null;
 select concat(a.first_name,' ',a.last_name) as Actor_nombre_completo , count(fa.film_id) as Numero_peliculas
 from actor a 
 left join film_actor fa on a.actor_id =fa.actor_id
-group by concat(a.first_name,' ',a.last_name) ;
+group by a.actor_id;
 
 --48) Crea una vista llamada “actor_num_peliculasˮ que muestre los nombres de los actores y el número de películas en las que han participado.
 create view actor_num_peliculas as
-select concat(a.first_name,' ',a.last_name) as "Actor_nombnre_completo" , count(fa.film_id) as numero_peliculas
+select concat(a.first_name,' ',a.last_name) as "Actor_nombre_completo" , count(fa.film_id) as numero_peliculas
 from actor a
 left join film_actor fa on a.actor_id=fa.actor_id
 group by concat(a.first_name,' ',a.last_name) ;
@@ -352,13 +353,14 @@ where rental_date > (
                     limit 1);
 
 --56) Encuentra el nombre y apellido de los actores que no han actuado en ninguna película de la categoría ‘Musicʼ.
-select distinct (concat(a.first_name,' ',a.last_name)) as "Actor"
+select concat(a.first_name, ' ',a.last_name) as "Actor" 
 from actor a 
-left join film_actor fa on a.actor_id=fa.actor_id  
-left join film f on fa.film_id =f.film_id 
-left join film_category fc on f.film_id =fc.film_id 
-left join category c on fc.category_id =c.category_id 
-where c."name" <> 'Music';
+where a.actor_id not in (
+      select distinct fa.actor_id
+      from film_actor fa
+      join film_category fc on fa.film_id = fc.film_id
+      join category c on fc.category_id = c.category_id
+      where c.name = 'Music');
 
 --57) Encuentra el título de todas las películas que fueron alquiladas por más de 8 días.
 select  f.title as "Titulo"
